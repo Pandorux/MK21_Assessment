@@ -20,7 +20,6 @@ public class ClockManagerTest : MonoBehaviour
     private Transform clockSpawnPoint;
 
     [SerializeField]
-    [Range(0, 200)]
     private float clockSpacing = 100f;
 
     [SerializeField]
@@ -39,7 +38,7 @@ public class ClockManagerTest : MonoBehaviour
     {
         Vector3 spawnPos = new Vector3(
             clockSpawnPoint.position.x,
-            (clockSpawnPoint.position.y + clockSpacing) * (clocks.Count + 1) + clockPadding,
+            -((clockSpawnPoint.position.y + clockSpacing) * clocks.Count + (clockPadding * Mathf.Clamp01(clocks.Count))),
             Vector3.zero.z
         );
 
@@ -49,9 +48,12 @@ public class ClockManagerTest : MonoBehaviour
 
     public void RemoveAllClocks()
     {
-        for(int i = minimumNumberOfClocks; i < clocks.Count; i++) 
+        List<ClockTest> objsToBeDeleted = clocks.GetRange(minimumNumberOfClocks, clocks.Count - minimumNumberOfClocks);
+        clocks.RemoveRange(minimumNumberOfClocks, clocks.Count - minimumNumberOfClocks);
+
+        for(int i = 0; i < objsToBeDeleted.Count; i++) 
         {
-            // TODO:
+            Destroy(objsToBeDeleted[i].gameObject);
         }
     }
 }
