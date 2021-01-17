@@ -28,6 +28,8 @@ public class TimeModeManager : MonoBehaviour
 
     void Start()
     {
+        currentTimeTimeMode.timeMode = currentTimeTimeMode.timeModeGameObject.GetComponent<CurrentTimeTimeMode>();
+
         timeModes = new TimeModeInformation[] {
             currentTimeTimeMode
         };

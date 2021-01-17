@@ -15,6 +15,11 @@ public class CurrentTimeTimeMode : MonoBehaviour, ITimeMode
             timeDisplayUpdate(this, e);
     }
 
+    void Start()
+    {
+        StartTimeMode();
+    }
+
     void Update()
     {
         if(GetIsTimeModeActive())
