@@ -10,6 +10,8 @@
 - Saving and Loading for all of the clocks would be nice 
     - I like doing persistence way too much
 - Would a static class for pausing button clicks and button click timings be helpful for this??
+- Giving Clocks Names
+- Choosing different time zones for clocks
 # TimeMode Interface Methods
     - StartTimeMode
     - ResetTimeMode
