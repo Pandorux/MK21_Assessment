@@ -16,12 +16,6 @@ public class ClockTest : MonoBehaviour
     [SerializeField]
     private CountdownTest countdown;
 
-    public enum TimeModes {
-        TimeDisplay,
-        StopWatch,
-        Countdown
-    }
-
     protected GameObject[] timeModeGameObjects;
 
     // Start is called before the first frame update
