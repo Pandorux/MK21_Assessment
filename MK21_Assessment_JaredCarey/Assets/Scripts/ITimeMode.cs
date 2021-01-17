@@ -13,6 +13,10 @@ public interface ITimeMode
     event OnTimeUpdateEventHandler timeDisplayUpdate;
 }
 
+public enum TimeModes {
+    TimeDisplay,
+}
+
 public delegate void OnTimeUpdateEventHandler(object sender, OnTimeUpdateEventArgs e);
 public class OnTimeUpdateEventArgs : EventArgs
 {

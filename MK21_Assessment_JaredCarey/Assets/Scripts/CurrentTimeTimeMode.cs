@@ -15,6 +15,14 @@ public class CurrentTimeTimeMode : MonoBehaviour, ITimeMode
             timeDisplayUpdate(this, e);
     }
 
+    void Update()
+    {
+        if(GetIsTimeModeActive())
+        {
+            UpdateCurrentTime();
+        }
+    }
+
     public bool GetIsTimeModeActive()
     {
         return isTimeModeActive;
@@ -46,4 +54,11 @@ public class CurrentTimeTimeMode : MonoBehaviour, ITimeMode
         throw new NotImplementedException();
     }
     
+    public void UpdateCurrentTime()
+    {
+        OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
+        e.time = DateTime.Now.ToLongTimeString();
+
+        TimeDisplayUpdated(e);
+    }
 }
