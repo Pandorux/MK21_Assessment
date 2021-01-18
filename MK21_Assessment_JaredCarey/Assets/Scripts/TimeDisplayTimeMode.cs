@@ -3,8 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrentTimeTimeMode : AbstractTimeMode
+public class TimeDisplayTimeMode : AbstractTimeMode
 {
+    void Update() 
+    {
+        if(GetIsTimeModeActive())
+        {
+            UpdateCurrentTime();
+        }
+    }
+
     public void UpdateCurrentTime()
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();

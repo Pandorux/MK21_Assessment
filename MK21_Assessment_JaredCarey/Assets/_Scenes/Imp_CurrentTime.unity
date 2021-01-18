@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingTimeMode: 0
-  currentTimeTimeMode:
+  timeDisplayTimeMode:
     timeModeGameObject: {fileID: 586059526595980519}
     timeDisplay: {fileID: 586059525335744636}
 --- !u!4 &586059526409983810
@@ -886,7 +886,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 586059526595980519}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4db0626cd5fc24141a3a1fa436c77e84, type: 3}
+  m_Script: {fileID: 11500000, guid: 47999b91897cb754c8f0886e39f5fc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &586059526937170520
