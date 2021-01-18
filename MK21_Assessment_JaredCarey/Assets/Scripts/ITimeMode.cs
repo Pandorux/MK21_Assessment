@@ -23,4 +23,8 @@ public delegate void OnTimeUpdateEventHandler(object sender, OnTimeUpdateEventAr
 public class OnTimeUpdateEventArgs : EventArgs
 {
     public string time;
+    public int hours;
+    public int minutes;
+    public int seconds;
 }
+

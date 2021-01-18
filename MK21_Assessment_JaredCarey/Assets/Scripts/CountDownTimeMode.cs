@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
-public class CountDownTimeMode : AbstractTimeMode
+public class CountDownTimeMode : AbstractSettableTimeMode
 {
     private Stopwatch timeElapsed = new Stopwatch();
     private float countdownStartTime = 0;
@@ -17,6 +17,11 @@ public class CountDownTimeMode : AbstractTimeMode
             float timeRemaining = countdownStartTime - ts.Seconds;
             return timeRemaining;
         }
+    }
+
+    void Awake()
+    {
+        userTimeUpdate += new OnTimeUpdateEventHandler(SetTime);
     }
 
     // Update is called once per frame
@@ -52,5 +57,15 @@ public class CountDownTimeMode : AbstractTimeMode
         e.time = getTimeRemaining.ToString();
 
         TimeDisplayUpdated(e);
+    }
+
+    public override void SetTime(float newValue)
+    {
+        countdownStartTime = (int)newValue;
+    }
+
+    protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
+    {
+        countdownStartTime = e.seconds;
     }
 }

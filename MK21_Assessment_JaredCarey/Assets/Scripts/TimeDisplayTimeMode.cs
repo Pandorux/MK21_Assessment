@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeDisplayTimeMode : AbstractTimeMode
+public class TimeDisplayTimeMode : AbstractSettableTimeMode
 {
     void Start()
     {
@@ -24,5 +24,16 @@ public class TimeDisplayTimeMode : AbstractTimeMode
         e.time = DateTime.Now.ToLongTimeString();
 
         TimeDisplayUpdated(e);
+    }
+
+    public override void SetTime(float newValue)
+    {
+        // TODO:
+        throw new NotImplementedException();
+    }
+
+    protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
+    {
+        // countdownStartTime = e.seconds;
     }
 }
