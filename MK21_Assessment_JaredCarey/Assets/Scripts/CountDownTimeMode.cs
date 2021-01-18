@@ -46,11 +46,6 @@ public class CountDownTimeMode : AbstractTimeMode
         timeElapsed.Reset();
     }
 
-    public void SetCountDownTime() 
-    {
-        countdownStartTime = 120f;
-    }
-
     public void UpdateDisplayWithCountDownTime()
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();

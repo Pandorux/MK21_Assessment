@@ -25,13 +25,14 @@ public class StopWatchTimeMode : AbstractTimeMode
     public override void ResetTimeMode()
     {
         base.ResetTimeMode();
-        stopWatch.Stop();
+        stopWatch.Reset();
+        
     }
 
     public override void StopTimeMode()
     {
         base.StopTimeMode();
-        stopWatch.Reset();
+        stopWatch.Stop();
     }
 
     public void UpdateDisplayWithStopWatchTime()
