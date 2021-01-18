@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class TimeDisplayTimeMode : AbstractTimeMode
 {
+    void Start()
+    {
+        StartTimeMode();
+    }
+
     void Update() 
     {
         if(GetIsTimeModeActive())

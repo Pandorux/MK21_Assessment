@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class CountDownTimeMode : AbstractTimeMode
@@ -38,7 +40,7 @@ public class CountDownTimeMode : AbstractTimeMode
         timeElapsed.Stop();
     }
 
-    public override void ResetimeMode() 
+    public override void ResetTimeMode() 
     {
         base.ResetTimeMode();
         timeElapsed.Reset();
@@ -46,7 +48,7 @@ public class CountDownTimeMode : AbstractTimeMode
 
     public void SetCountDownTime() 
     {
-        countdownStartTime = int.Parse(countdownTextInput.text);
+        countdownStartTime = 120f;
     }
 
     public void UpdateDisplayWithCountDownTime()
