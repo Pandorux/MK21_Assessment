@@ -15,7 +15,8 @@ public interface ITimeMode
 
 public enum TimeModes {
     TimeDisplay,
-    StopWatch
+    StopWatch,
+    CountDown
 }
 
 public delegate void OnTimeUpdateEventHandler(object sender, OnTimeUpdateEventArgs e);
