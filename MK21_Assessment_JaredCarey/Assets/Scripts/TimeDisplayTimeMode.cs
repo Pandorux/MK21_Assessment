@@ -9,11 +9,11 @@ public class TimeDisplayTimeMode : AbstractTimeMode
     {
         if(GetIsTimeModeActive())
         {
-            UpdateCurrentTime();
+            UpdateDisplayWithCurrentTime();
         }
     }
 
-    public void UpdateCurrentTime()
+    public void UpdateDisplayWithCurrentTime()
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
         e.time = DateTime.Now.ToLongTimeString();
