@@ -15,6 +15,7 @@ public interface ITimeMode
 
 public enum TimeModes {
     TimeDisplay,
+    StopWatch
 }
 
 public delegate void OnTimeUpdateEventHandler(object sender, OnTimeUpdateEventArgs e);

@@ -3,29 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrentTimeTimeMode : MonoBehaviour, ITimeMode
+public abstract class AbstractTimeMode : MonoBehaviour, ITimeMode
 {
-
-    private bool isTimeModeActive = false;
+    protected bool isTimeModeActive = false;
 
     public event OnTimeUpdateEventHandler timeDisplayUpdate;
     public void TimeDisplayUpdated(OnTimeUpdateEventArgs e)
     {
         if(timeDisplayUpdate != null)
             timeDisplayUpdate(this, e);
-    }
-
-    void Start()
-    {
-        StartTimeMode();
-    }
-
-    void Update()
-    {
-        if(GetIsTimeModeActive())
-        {
-            UpdateCurrentTime();
-        }
     }
 
     public bool GetIsTimeModeActive()
@@ -38,32 +24,24 @@ public class CurrentTimeTimeMode : MonoBehaviour, ITimeMode
         isTimeModeActive = newState;
     }
 
-    public void StartTimeMode()
+    public virtual void StartTimeMode()
     {
         SetIsTimeModeActive(true);
     }
 
-    public void ResetTimeMode()
+    public virtual void ResetTimeMode()
     {
         SetIsTimeModeActive(false);
     }
 
-    public void StopTimeMode()
+    public virtual void StopTimeMode()
     {
         SetIsTimeModeActive(false);
     }
 
-    public void ValidateInputtedTime()
+    public virtual void ValidateInputtedTime()
     {
         // TODO:
         throw new NotImplementedException();
-    }
-    
-    public void UpdateCurrentTime()
-    {
-        OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
-        e.time = DateTime.Now.ToLongTimeString();
-
-        TimeDisplayUpdated(e);
     }
 }

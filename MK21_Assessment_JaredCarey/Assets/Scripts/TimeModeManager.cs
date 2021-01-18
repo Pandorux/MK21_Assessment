@@ -22,24 +22,40 @@ public class TimeModeManager : MonoBehaviour
     } 
 
     [SerializeField]
-    private TimeModeInformation currentTimeTimeMode;
+    private TimeModeInformation timeDisplayTimeMode;
+
+    [SerializeField]
+    private TimeModeInformation stopWatchTimeMode;
 
     private TimeModeInformation[] timeModes;
 
     void Start()
     {
-        currentTimeTimeMode.timeMode = currentTimeTimeMode.timeModeGameObject.GetComponent<CurrentTimeTimeMode>();
+        timeDisplayTimeMode.timeMode = timeDisplayTimeMode.timeModeGameObject.GetComponent<TimeDisplayTimeMode>();
+        stopWatchTimeMode.timeMode = stopWatchTimeMode.timeModeGameObject.GetComponent<StopWatchTimeMode>();
 
         timeModes = new TimeModeInformation[] {
-            currentTimeTimeMode
+            timeDisplayTimeMode,
+            stopWatchTimeMode
         };
 
-        currentTimeTimeMode.timeMode.timeDisplayUpdate += new OnTimeUpdateEventHandler(UpdateTimeDisplay);
+        if(timeModes[(int)TimeModes.TimeDisplay].timeMode != null)
+        {
+            timeDisplayTimeMode.timeMode.timeDisplayUpdate += new OnTimeUpdateEventHandler(UpdateTimeDisplay);
+        }
+        
+        if(timeModes[(int)TimeModes.StopWatch].timeMode != null)
+        {
+            stopWatchTimeMode.timeMode.timeDisplayUpdate += new OnTimeUpdateEventHandler(UpdateTimeDisplay);
+        }
+        
+
         SelectTimeMode((int)startingTimeMode);
     }
     
     public void SelectTimeMode(int timeModeIndex) 
     {
+        timeModes[timeModeIndex].timeMode.StopTimeMode();
         currentTimeMode = (TimeModes)timeModeIndex;
 
         for(int i = 0; i < timeModes.Length; i++) 
