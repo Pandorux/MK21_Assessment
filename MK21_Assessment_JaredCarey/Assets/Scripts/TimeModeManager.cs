@@ -18,7 +18,34 @@ public class TimeModeManager : MonoBehaviour
     {
         public ITimeMode timeMode;
         public GameObject timeModeGameObject;
-        public TextMeshProUGUI timeDisplay;
+
+        [SerializeField]
+        private bool isTimeModeEditable;
+
+        [SerializeField]
+        private TextMeshProUGUI timeDisplay;
+
+        [SerializeField]
+        private TMP_InputField timeInput;
+
+        public string text
+        {
+            get
+            {
+                if(isTimeModeEditable)
+                    return timeInput.text;
+                else
+                    return timeDisplay.text;
+            }
+
+            set
+            {
+                if(isTimeModeEditable)
+                    timeInput.text = value;
+                else
+                    timeDisplay.text = value;
+            }
+        }
     } 
 
     [SerializeField]
@@ -79,8 +106,18 @@ public class TimeModeManager : MonoBehaviour
         SelectTimeMode((int)currentTimeMode);
     }
 
+    public void StartActiveTimeMode()
+    {
+        timeModes[(int)currentTimeMode].timeMode.StopTimeMode();
+    }
+
+    public void StopActiveTimeMode()
+    {
+        timeModes[(int)currentTimeMode].timeMode.StopTimeMode();
+    }
+
     private void UpdateTimeDisplay(object sender, OnTimeUpdateEventArgs e)
     {
-        timeModes[(int)currentTimeMode].timeDisplay.text = e.time;
+        timeModes[(int)currentTimeMode].text = e.time;
     }
 }
