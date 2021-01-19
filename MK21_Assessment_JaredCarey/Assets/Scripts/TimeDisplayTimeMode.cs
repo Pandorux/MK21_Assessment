@@ -18,7 +18,27 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
     };
 
     private string defaultTimeFormat = TimeFormats[0];
-    private string chosenTimeFormatIndex;
+
+    private string m_ChosenTimeFormat;
+    public string chosenTimeFormat
+    {
+        get
+        {
+            return m_ChosenTimeFormat;
+        }
+
+        set
+        {
+            if(Array.Exists(TimeFormats, timeFormat => timeFormat == value))
+            {
+                m_ChosenTimeFormat = value;
+            }
+            else
+            {
+                // TODO: Throw an exception
+            }
+        }
+    }
 
     public DateTime getCurrentTime
     {
@@ -30,7 +50,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
 
     void Start()
     {
-        chosenTimeFormatIndex = defaultTimeFormat;
+        chosenTimeFormat = defaultTimeFormat;
 
         onUserEdit += new OnTimeUpdateEventHandler(SetTime);
         StartTimeMode();
@@ -47,7 +67,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
     public void UpdateDisplayWithCurrentTime()
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
-        e.time = DateTime.Now.ToString(chosenTimeFormatIndex);
+        e.time = DateTime.Now.ToString(chosenTimeFormat);
 
         TimeDisplayUpdated(e);
     }

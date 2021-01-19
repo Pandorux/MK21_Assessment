@@ -19,23 +19,29 @@ namespace TMPro
 
         [SerializeField]
         private string m_Key;
+        TMP_Dropdown.OptionData m_OptionData;
 
         /// <summary>
-        /// The key that is associated with the text and/or image of the option.
+        /// The key that is associated with the option.
         /// </summary>
         public string key { get { return m_Key; } set { m_Key = value; } }
 
         /// <summary>
+        /// The option of that is used as the basis of this class
+        /// </summary>
+        public TMP_Dropdown.OptionData optionData  { get { return m_OptionData; } set { m_OptionData = value; } }
+
+        /// <summary>
         /// The text associated with the option.
         /// </summary>
-        public string text { get { return m_OptionData.text; } set { m_OptionData.text = value; } }
+        public string text { get { return optionData.text; } set { optionData.text = value; } }
 
         /// <summary>
         /// The image associated with the option.
         /// </summary>
-        public Sprite image { get { return m_OptionData.image; } set { m_OptionData.image = value; } }
+        public Sprite image { get { return optionData.image; } set { optionData.image = value; } }
 
-        TMP_Dropdown.OptionData m_OptionData;
+
 
         public OptionDataKeyValue() { }
 
