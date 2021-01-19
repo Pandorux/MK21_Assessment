@@ -5,6 +5,6 @@ using UnityEngine;
 public interface ISettableTimeMode : ITimeMode
 {
     void SetTime(float newValue);
-    void UserTimeUpdated(OnTimeUpdateEventArgs e);
-    event OnTimeUpdateEventHandler userTimeUpdate;
+    void OnUserEdited(OnTimeUpdateEventArgs e);
+    event OnTimeUpdateEventHandler onUserEdit;
 }

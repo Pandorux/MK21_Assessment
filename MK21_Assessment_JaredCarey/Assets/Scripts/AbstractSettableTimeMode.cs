@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class AbstractSettableTimeMode : AbstractTimeMode, ISettableTimeMode
 {
-    public event OnTimeUpdateEventHandler userTimeUpdate;
-    public void UserTimeUpdated(OnTimeUpdateEventArgs e)
+    public event OnTimeUpdateEventHandler onUserEdit;
+    public void OnUserEdited(OnTimeUpdateEventArgs e)
     {
-        if(userTimeUpdate != null)
-            userTimeUpdate(this, e);
+        if(onUserEdit != null)
+            onUserEdit(this, e);
     }
 
     public abstract void SetTime(float newValue);

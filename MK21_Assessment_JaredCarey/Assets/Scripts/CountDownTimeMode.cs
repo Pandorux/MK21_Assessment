@@ -21,7 +21,7 @@ public class CountDownTimeMode : AbstractSettableTimeMode
 
     void Awake()
     {
-        userTimeUpdate += new OnTimeUpdateEventHandler(SetTime);
+        onUserEdit += new OnTimeUpdateEventHandler(SetTime);
     }
 
     // Update is called once per frame
@@ -66,6 +66,6 @@ public class CountDownTimeMode : AbstractSettableTimeMode
 
     protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
     {
-        countdownStartTime = e.seconds;
+        TimeDisplayUpdated(e);
     }
 }

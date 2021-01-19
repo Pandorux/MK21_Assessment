@@ -48,6 +48,14 @@ public class TimeModeManager : MonoBehaviour
         }
     } 
 
+    TimeModeInformation getActiveTimeMode
+    {
+        get
+        {
+            return timeModes[(int)currentTimeMode];
+        }
+    }
+
     [SerializeField]
     private TimeModeInformation timeDisplayTimeMode;
 
@@ -114,6 +122,20 @@ public class TimeModeManager : MonoBehaviour
     public void StopActiveTimeMode()
     {
         timeModes[(int)currentTimeMode].timeMode.StopTimeMode();
+    }
+
+    public void ActiveTimeModeEdited()
+    {
+        Debug.Log("ActiveTimeModeEdited Method Called");
+
+        if(getActiveTimeMode.timeMode is ISettableTimeMode)
+        {
+            OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
+            e.time = "This is working";
+            Debug.Log($"User Edit Update Test: {e.time}");
+            
+            ((ISettableTimeMode) getActiveTimeMode.timeMode).OnUserEdited(e);
+        }
     }
 
     private void UpdateTimeDisplay(object sender, OnTimeUpdateEventArgs e)

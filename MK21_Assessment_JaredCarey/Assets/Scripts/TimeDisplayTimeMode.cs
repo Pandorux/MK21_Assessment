@@ -7,6 +7,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
 {
     void Start()
     {
+        onUserEdit += new OnTimeUpdateEventHandler(SetTime);
         StartTimeMode();
     }
 
@@ -34,6 +35,6 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
 
     protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
     {
-        // countdownStartTime = e.seconds;
+        TimeDisplayUpdated(e);
     }
 }
