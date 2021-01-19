@@ -5,6 +5,7 @@ using TMPro;
 
 public class TimeModeManager : MonoBehaviour
 {
+
     [SerializeField]
     private TimeModes startingTimeMode = TimeModes.TimeDisplay;
     public TimeModes currentTimeMode
