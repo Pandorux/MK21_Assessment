@@ -20,6 +20,14 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
     private string defaultTimeFormat = TimeFormats[0];
     private string chosenTimeFormatIndex;
 
+    public DateTime getCurrentTime
+    {
+        get
+        {
+            return DateTime.Now;
+        }
+    }
+
     void Start()
     {
         chosenTimeFormatIndex = defaultTimeFormat;
