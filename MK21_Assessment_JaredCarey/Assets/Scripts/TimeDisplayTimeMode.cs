@@ -39,19 +39,6 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         }
     }
 
-    public bool doesChosenTimeFormatUse24HourClock
-    {
-        get
-        {
-            if(chosenTimeFormat.StartsWith("H"))
-            {
-                return true;
-            }
-
-            return false;
-        }
-    }
-
     public DateTime getCurrentTime
     {
         get
@@ -114,11 +101,6 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
             timeAdjustment = new TimeSpan(hoursTimeAdjustment, minutesTimeAdjustment, value);
         }
     }
-
-
-
-    private int minuteTimeAdjustment = 20;
-    private int secondTimeAdjustment = 0;
 
     void Start()
     {
