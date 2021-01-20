@@ -18,7 +18,6 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
     };
 
     private string defaultTimeFormat = TimeFormats[0];
-
     private string m_ChosenTimeFormat;
     public string chosenTimeFormat
     {
@@ -40,13 +39,86 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         }
     }
 
+    public bool doesChosenTimeFormatUse24HourClock
+    {
+        get
+        {
+            if(chosenTimeFormat.StartsWith("H"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
     public DateTime getCurrentTime
     {
         get
         {
-            return DateTime.Now;
+            DateTime adjustedTime = DateTime.Now.Add(timeAdjustment);
+
+            return adjustedTime;
         }
     }
+
+    private TimeSpan m_TimeAdjustment = new TimeSpan(-2, 30, 3);
+    public TimeSpan timeAdjustment
+    {
+        get
+        {
+            return m_TimeAdjustment;
+        }
+
+        private set
+        {
+            m_TimeAdjustment = value;
+        }
+    }
+
+    public int hoursTimeAdjustment
+    {
+        get
+        {
+            return timeAdjustment.Hours;
+        }
+
+        set
+        {
+            timeAdjustment = new TimeSpan(value, minutesTimeAdjustment, secondsTimeAdjustment);
+        }
+    } 
+
+    public int minutesTimeAdjustment
+    {
+        get
+        {
+            return timeAdjustment.Minutes;
+        }
+
+        set
+        {
+            timeAdjustment = new TimeSpan(hoursTimeAdjustment, value, secondsTimeAdjustment);
+        }
+    } 
+
+    public int secondsTimeAdjustment
+    {
+        get
+        {
+            return timeAdjustment.Seconds;
+        }
+
+        set
+        {
+            timeAdjustment = new TimeSpan(hoursTimeAdjustment, minutesTimeAdjustment, value);
+        }
+    }
+
+
+
+    private int minuteTimeAdjustment = 20;
+    private int secondTimeAdjustment = 0;
 
     void Start()
     {
@@ -67,7 +139,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
     public void UpdateDisplayWithCurrentTime()
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
-        e.time = DateTime.Now.ToString(chosenTimeFormat);
+        e.time = getCurrentTime.ToString(chosenTimeFormat);
 
         TimeDisplayUpdated(e);
     }
