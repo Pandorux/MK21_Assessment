@@ -17,7 +17,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         "h:mm"
     };
 
-    private string defaultTimeFormat = TimeFormats[0];
+    private string defaultTimeFormat = TimeFormats[3];
     private string m_ChosenTimeFormat;
     public string chosenTimeFormat
     {
@@ -49,6 +49,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         }
     }
 
+    // TEST 
     private TimeSpan m_TimeAdjustment = new TimeSpan(-2, 30, 3);
     public TimeSpan timeAdjustment
     {
@@ -108,6 +109,10 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
 
         onUserEdit += new OnTimeUpdateEventHandler(SetTime);
         StartTimeMode();
+
+        Debug.Log($"DateTime Max Hours Value: {DateTime.MaxValue.Hour}");
+        Debug.Log($"DateTime Max Minutes Value: {DateTime.MaxValue.Minute}");
+        Debug.Log($"DateTime Max Seconds Value: {DateTime.MaxValue.Second}");
     }
 
     void Update() 

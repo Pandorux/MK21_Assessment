@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,11 +14,21 @@ public class TimeDisplaySettings : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown timeFormatDropDown;
 
+    [SerializeField]
+    private TMP_Dropdown setHourDropDown;
+
+    [SerializeField]
+    private TMP_Dropdown setMinuteDropDown;
+
+    [SerializeField]
+    private TMP_Dropdown amPMDropDown;
+
     private OptionDataKeyValue[] timeFormatOptionDataKeyValues;
 
     void Start()
     {
         SetupTimeFormatOptionData();
+        SetupSetTimeDropDownLists();
     }
 
     void Update()
@@ -57,5 +68,30 @@ public class TimeDisplaySettings : MonoBehaviour
             .ToList();   
 
         timeFormatDropDown.AddOptions(timeFormatOptionData);
+    }
+
+    private void UpdateSetTimeDropDownLists()
+    {
+
+    }
+
+    private void SetupSetTimeDropDownLists()
+    {
+        List<TMP_Dropdown.OptionData> hoursOptData = new List<TMP_Dropdown.OptionData>();
+        for(int i = 0; i <= DateTime.MaxValue.Hour; i++)
+        {
+            hoursOptData.Add(new TMP_Dropdown.OptionData(i.ToString()));
+        }
+
+        List<TMP_Dropdown.OptionData> minutesOptData = new List<TMP_Dropdown.OptionData>();
+        for(int i = 0; i <= DateTime.MaxValue.Minute; i++)
+        {
+            minutesOptData.Add(new TMP_Dropdown.OptionData(i.ToString()));
+        }
+
+        setHourDropDown.AddOptions(hoursOptData);
+        setMinuteDropDown.AddOptions(minutesOptData);
+
+        amPMDropDown.gameObject.SetActive(DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat));
     }
 }
