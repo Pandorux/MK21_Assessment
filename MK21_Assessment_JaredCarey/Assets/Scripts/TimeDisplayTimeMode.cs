@@ -103,7 +103,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         }
     }
 
-    void Start()
+    void Awake()
     {
         chosenTimeFormat = defaultTimeFormat;
 
@@ -131,14 +131,26 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         TimeDisplayUpdated(e);
     }
 
-    public override void SetTime(float newValue)
+    public override void SetTime(TimeSpan newTime)
     {
-        // TODO:
-        throw new NotImplementedException();
+        timeAdjustment = DateTimeHelper.GetTimeDifference(
+            DateTime.Now.TimeOfDay, 
+            newTime
+        );
+
+        OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
+        e.time = getCurrentTime.ToString(chosenTimeFormat);
+
+        TimeDisplayUpdated(e);
     }
 
     protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
     {
-        TimeDisplayUpdated(e);
+        SetTime(new TimeSpan(
+            e.hours,
+            e.minutes,
+            e.seconds
+        ));
     }
+
 }

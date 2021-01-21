@@ -41,6 +41,19 @@ public class TimeDisplaySettings : MonoBehaviour
         timeDisplayTimeMode.chosenTimeFormat = timeFormatOptionDataKeyValues[timeFormatDropDown.value].key;
     }
 
+    public void UpdateTime()
+    {
+        OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
+
+        int hours = 12;
+        
+        e.hours = setHourDropDown.value;
+        e.minutes = setMinuteDropDown.value;
+        e.seconds = DateTime.Now.Second; // The user cannot set time 
+
+        timeDisplayTimeMode.OnUserEdited(e);
+    }
+
     private void UpdateTimeFormatDropDownList()
     {
         for(int i = 0; i < timeFormatOptionDataKeyValues.Length; i++)
@@ -68,11 +81,6 @@ public class TimeDisplaySettings : MonoBehaviour
             .ToList();   
 
         timeFormatDropDown.AddOptions(timeFormatOptionData);
-    }
-
-    private void UpdateSetTimeDropDownLists()
-    {
-
     }
 
     private void SetupSetTimeDropDownLists()

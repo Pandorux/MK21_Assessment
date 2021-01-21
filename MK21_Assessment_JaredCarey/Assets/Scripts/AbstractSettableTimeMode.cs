@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,6 @@ public abstract class AbstractSettableTimeMode : AbstractTimeMode, ISettableTime
             onUserEdit(this, e);
     }
 
-    public abstract void SetTime(float newValue);
+    public abstract void SetTime(TimeSpan newTime);
     protected abstract void SetTime(object sender, OnTimeUpdateEventArgs e);
 }

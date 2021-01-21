@@ -59,9 +59,10 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         TimeDisplayUpdated(e);
     }
 
-    public override void SetTime(float newValue)
+    public override void SetTime(TimeSpan newTime)
     {
-        countdownStartTime = (int)newValue;
+        // TODO:
+        throw new NotImplementedException();
     }
 
     protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
