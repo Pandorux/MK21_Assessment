@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TimeModeManager : MonoBehaviour
@@ -56,6 +57,22 @@ public class TimeModeManager : MonoBehaviour
     private TimeModeInformation countDownTimeMode;
 
     private TimeModeInformation[] timeModes;
+
+    [SerializeField]
+    private  Button destroyButton;
+    private bool m_CanUserDestroy = false;
+    public bool canUserDestroy
+    {
+        get
+        {
+            return m_CanUserDestroy;
+        }
+
+        private set
+        {
+            m_CanUserDestroy = value;
+        }
+    }
 
     void Start()
     {
@@ -131,5 +148,17 @@ public class TimeModeManager : MonoBehaviour
     private void UpdateTimeDisplay(object sender, OnTimeUpdateEventArgs e)
     {
         timeModes[(int)currentTimeMode].text = e.time;
+    }
+
+    public void UserCannotDestroy()
+    {
+        canUserDestroy = false;
+        destroyButton.interactable = canUserDestroy;
+    }
+
+    public void UserCanDestroy()
+    {
+        canUserDestroy = true;
+        destroyButton.interactable = canUserDestroy;
     }
 }

@@ -16,34 +16,32 @@ public class ClockManager : MonoBehaviour
     [SerializeField]
     private int minimumNumberOfClocks = 1;
 
-    [SerializeField]
-    private Transform clockSpawnPoint;
-
-    [SerializeField]
-    private float clockSpacing = 100f;
-
-    [SerializeField]
-    [Range(0, 50)]
-    private float clockPadding = 20f;
-
     void Start() 
     {
         for(int i = clocks.Count; i < minimumNumberOfClocks; i++) 
         {
             SpawnClock();
         }
+
+        if(clocks.Count > minimumNumberOfClocks)
+        {
+            UnprotectClocksFromUserDestruction();
+        }
+        else
+        {
+            ProtectClocksFromUserDestruction();
+        }
     }
 
     public void SpawnClock() 
     {
-        Vector3 spawnPos = new Vector3(
-            clockSpawnPoint.position.x,
-            -((clockSpawnPoint.position.y + clockSpacing) * clocks.Count + (clockPadding * Mathf.Clamp01(clocks.Count))),
-            Vector3.zero.z
-        );
-
-        GameObject obj = Instantiate(clockPrefab, spawnPos, Quaternion.identity, scrollView.transform);
+        GameObject obj = Instantiate(clockPrefab, scrollView.transform);
         clocks.Add(obj.GetComponent<TimeModeManager>());
+
+        if(clocks.Count > minimumNumberOfClocks)
+        {
+            UnprotectClocksFromUserDestruction();
+        }
     }
 
     public void RemoveAllClocks()
@@ -54,6 +52,24 @@ public class ClockManager : MonoBehaviour
         for(int i = 0; i < objsToBeDeleted.Count; i++) 
         {
             Destroy(objsToBeDeleted[i].gameObject);
+        }
+
+        ProtectClocksFromUserDestruction();
+    }
+
+    private void ProtectClocksFromUserDestruction()
+    {
+        for(int i = 0; i < clocks.Count; i++)
+        {
+            clocks[i].UserCannotDestroy();
+        }
+    }
+
+    private void UnprotectClocksFromUserDestruction()
+    {
+        for(int i = 0; i < clocks.Count; i++)
+        {
+            clocks[i].UserCanDestroy();
         }
     }
 }
