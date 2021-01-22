@@ -6,16 +6,32 @@ using UnityEngine;
 
 public class CountDownTimeMode : AbstractSettableTimeMode
 {
+    [SerializeField]
+    private AudioSource countDownAlarm;
+
     private Stopwatch timeElapsed = new Stopwatch();
     private TimeSpan countdownStartTime = TimeSpan.Zero;
+    private bool m_IsAlarmPlaying;
 
-    public float getTimeRemaining
+    public bool isAlarmPlaying
     {
         get
         {
-            TimeSpan ts = timeElapsed.Elapsed;
-            float timeRemaining = countdownStartTime.Seconds - ts.Seconds;
-            return timeRemaining;
+            return m_IsAlarmPlaying;
+        }
+
+        private set
+        {
+            m_IsAlarmPlaying = true;
+        }
+    }
+
+    public TimeSpan getTimeRemaining
+    {
+        get
+        {
+            TimeSpan timeLeft = DateTimeHelper.GetTimeDifference(timeElapsed.Elapsed, countdownStartTime);
+            return timeLeft;
         }
     }
 
@@ -30,6 +46,11 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         if(GetIsTimeModeActive()) 
         {
             UpdateDisplayWithCountDownTime();
+
+            if(getTimeRemaining < TimeSpan.Zero && !isAlarmPlaying)
+            {
+                PlayAlarmClock();
+            }
         }
     }
 
@@ -43,6 +64,11 @@ public class CountDownTimeMode : AbstractSettableTimeMode
     {
         base.StopTimeMode();
         timeElapsed.Stop();
+
+        if(isAlarmPlaying)
+        {
+            StopAlarmClock();
+        }
     }
 
     public override void ResetTimeMode() 
@@ -71,5 +97,17 @@ public class CountDownTimeMode : AbstractSettableTimeMode
     protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
     {
         SetTime(new TimeSpan(e.hours, e.minutes, e.seconds));
+    }
+
+    public void PlayAlarmClock()
+    {
+        isAlarmPlaying = true;
+        countDownAlarm.Play();
+    }
+
+    public void StopAlarmClock()
+    {
+        isAlarmPlaying = false;
+        countDownAlarm.Stop();
     }
 }
