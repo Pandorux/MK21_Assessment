@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ClockManager : MonoBehaviour
@@ -36,6 +37,9 @@ public class ClockManager : MonoBehaviour
     public void SpawnClock() 
     {
         GameObject obj = Instantiate(clockPrefab, scrollView.transform);
+        obj.SetActive(true);
+        obj.name = $"Clock {clocks.Count}";
+
         clocks.Add(obj.GetComponent<TimeModeManager>());
 
         if(clocks.Count > minimumNumberOfClocks)
@@ -70,6 +74,20 @@ public class ClockManager : MonoBehaviour
         for(int i = 0; i < clocks.Count; i++)
         {
             clocks[i].UserCanDestroy();
+        }
+    }
+
+    public void RemoveClock(TimeModeManager manager)
+    {
+        clocks.Remove(manager);
+
+        if(clocks.Count > minimumNumberOfClocks) 
+        {
+            UnprotectClocksFromUserDestruction();
+        }
+        else
+        {
+            ProtectClocksFromUserDestruction();
         }
     }
 }
