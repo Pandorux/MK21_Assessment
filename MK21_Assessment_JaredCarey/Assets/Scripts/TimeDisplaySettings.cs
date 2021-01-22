@@ -45,8 +45,6 @@ public class TimeDisplaySettings : MonoBehaviour
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
 
-        int hours = 12;
-        
         e.hours = setHourDropDown.value;
         e.minutes = setMinuteDropDown.value;
         e.seconds = DateTime.Now.Second; // The user cannot set time 

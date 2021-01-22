@@ -7,14 +7,14 @@ using UnityEngine;
 public class CountDownTimeMode : AbstractSettableTimeMode
 {
     private Stopwatch timeElapsed = new Stopwatch();
-    private float countdownStartTime = 0;
+    private TimeSpan countdownStartTime = TimeSpan.Zero;
 
     public float getTimeRemaining
     {
         get
         {
             TimeSpan ts = timeElapsed.Elapsed;
-            float timeRemaining = countdownStartTime - ts.Seconds;
+            float timeRemaining = countdownStartTime.Seconds - ts.Seconds;
             return timeRemaining;
         }
     }
@@ -61,12 +61,15 @@ public class CountDownTimeMode : AbstractSettableTimeMode
 
     public override void SetTime(TimeSpan newTime)
     {
-        // TODO:
-        throw new NotImplementedException();
+        countdownStartTime = newTime;
+        OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
+        e.time = getTimeRemaining.ToString();
+
+        TimeDisplayUpdated(e);
     }
 
     protected override void SetTime(object sender, OnTimeUpdateEventArgs e)
     {
-        TimeDisplayUpdated(e);
+        SetTime(new TimeSpan(e.hours, e.minutes, e.seconds));
     }
 }

@@ -22,30 +22,18 @@ public class TimeModeManager : MonoBehaviour
         public GameObject timeModeGameObject;
 
         [SerializeField]
-        private bool isTimeModeEditable;
-
-        [SerializeField]
         private TextMeshProUGUI timeDisplay;
-
-        [SerializeField]
-        private TMP_InputField timeInput;
 
         public string text
         {
             get
             {
-                if(isTimeModeEditable)
-                    return timeInput.text;
-                else
-                    return timeDisplay.text;
+                return timeDisplay.text;
             }
 
             set
             {
-                if(isTimeModeEditable)
-                    timeInput.text = value;
-                else
-                    timeDisplay.text = value;
+                timeDisplay.text = value;
             }
         }
     } 
