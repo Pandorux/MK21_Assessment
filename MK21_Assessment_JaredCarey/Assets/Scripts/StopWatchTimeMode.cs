@@ -27,7 +27,6 @@ public class StopWatchTimeMode : AbstractTimeMode
     {
         base.ResetTimeMode();
         stopWatch.Reset();
-        
     }
 
     public override void StopTimeMode()

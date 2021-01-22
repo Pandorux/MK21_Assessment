@@ -110,6 +110,6 @@ public class TimeDisplaySettings : MonoBehaviour
         setHourDropDown.AddOptions(hoursOptData);
         setMinuteDropDown.AddOptions(minutesOptData);
 
-        amPMDropDown.gameObject.SetActive(DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat));
+        //amPMDropDown.gameObject.SetActive(DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat));
     }
 }
