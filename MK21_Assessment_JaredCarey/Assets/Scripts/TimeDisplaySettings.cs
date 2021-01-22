@@ -41,13 +41,22 @@ public class TimeDisplaySettings : MonoBehaviour
         timeDisplayTimeMode.chosenTimeFormat = timeFormatOptionDataKeyValues[timeFormatDropDown.value].key;
     }
 
+    public void UpdateSetTimeDisplay()
+    {
+        bool showAmPm = DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat);
+        amPMDropDown.gameObject.SetActive(showAmPm);
+        
+        setHourDropDown.value = showAmPm ? 12 : timeDisplayTimeMode.getCurrentTime.Hour;
+        setMinuteDropDown.value = timeDisplayTimeMode.getCurrentTime.Minute;
+    }
+
     public void UpdateTime()
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
 
         e.hours = setHourDropDown.value;
         e.minutes = setMinuteDropDown.value;
-        e.seconds = DateTime.Now.Second; // The user cannot set time 
+        e.seconds = DateTime.Now.Second; // The user cannot set seconds 
 
         timeDisplayTimeMode.OnUserEdited(e);
     }
@@ -59,6 +68,8 @@ public class TimeDisplaySettings : MonoBehaviour
             timeFormatOptionDataKeyValues[i].text = timeDisplayTimeMode.getCurrentTime.ToString(timeFormatOptionDataKeyValues[i].key);
             timeFormatDropDown.options[i].text = timeFormatOptionDataKeyValues[i].text;
         }
+
+        timeFormatDropDown.value = Array.FindIndex(TimeDisplayTimeMode.TimeFormats, timeFormat => timeFormat == timeDisplayTimeMode.chosenTimeFormat);
     }
 
     private void SetupTimeFormatOptionData()
@@ -67,11 +78,12 @@ public class TimeDisplaySettings : MonoBehaviour
 
         for(int i = 0; i < timeFormatOptionDataKeyValues.Length; i++)
         {
+            string optText = timeDisplayTimeMode.getCurrentTime.ToString(TimeDisplayTimeMode.TimeFormats[i]);
+
             timeFormatOptionDataKeyValues[i] = new OptionDataKeyValue (
                 TimeDisplayTimeMode.TimeFormats[i],
                 timeDisplayTimeMode.getCurrentTime.ToString(TimeDisplayTimeMode.TimeFormats[i])
             );
-
         }
 
         List<TMP_Dropdown.OptionData> timeFormatOptionData = timeFormatOptionDataKeyValues

@@ -17,7 +17,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         "h:mm"
     };
 
-    private string defaultTimeFormat = TimeFormats[3];
+    private string defaultTimeFormat = TimeFormats[0];
     private string m_ChosenTimeFormat;
     public string chosenTimeFormat
     {
@@ -49,8 +49,7 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         }
     }
 
-    // TEST 
-    private TimeSpan m_TimeAdjustment = new TimeSpan(-2, 30, 3);
+    private TimeSpan m_TimeAdjustment = TimeSpan.Zero;
     public TimeSpan timeAdjustment
     {
         get
