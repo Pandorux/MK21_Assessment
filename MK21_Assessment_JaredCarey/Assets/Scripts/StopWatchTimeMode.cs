@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class StopWatchTimeMode : AbstractTimeMode
 {
+    public readonly static string StopWatchDisplayFormat = @"hh\:mm\:ss";
     private Stopwatch stopWatch = new Stopwatch();
 
     // Update is called once per frame
@@ -38,7 +39,7 @@ public class StopWatchTimeMode : AbstractTimeMode
     public void UpdateDisplayWithStopWatchTime()
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
-        e.time = stopWatch.Elapsed.ToString();
+        e.time = stopWatch.Elapsed.ToString(StopWatchDisplayFormat);
 
         TimeDisplayUpdated(e);
     }
