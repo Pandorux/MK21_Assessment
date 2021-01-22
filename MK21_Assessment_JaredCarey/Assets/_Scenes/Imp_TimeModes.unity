@@ -204,18 +204,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &651655890 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1098262761, guid: 534676088d93309408831fe116c63cc0,
-    type: 3}
-  m_PrefabInstance: {fileID: 8268113634311137715}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa8085681bb89e48a96a76a7eee775a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &749482240
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,34 +369,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1098262757, guid: 534676088d93309408831fe116c63cc0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1255808649, guid: 534676088d93309408831fe116c63cc0, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1255808649, guid: 534676088d93309408831fe116c63cc0, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1255808649, guid: 534676088d93309408831fe116c63cc0, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1255808649, guid: 534676088d93309408831fe116c63cc0, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 651655890}
-    - target: {fileID: 1255808649, guid: 534676088d93309408831fe116c63cc0, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: UpdateSetTimeDisplay
-      objectReference: {fileID: 0}
-    - target: {fileID: 1255808649, guid: 534676088d93309408831fe116c63cc0, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1465147675790615240, guid: 534676088d93309408831fe116c63cc0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -468,21 +428,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Clock
-      objectReference: {fileID: 0}
-    - target: {fileID: 2756538431208008382, guid: 534676088d93309408831fe116c63cc0,
-        type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5049979441679067170, guid: 534676088d93309408831fe116c63cc0,
-        type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8061234668704679779, guid: 534676088d93309408831fe116c63cc0,
-        type: 3}
-      propertyPath: m_text
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9079291605185293117, guid: 534676088d93309408831fe116c63cc0,
         type: 3}
