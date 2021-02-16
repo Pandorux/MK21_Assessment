@@ -9,7 +9,7 @@ public class ClockManager : MonoBehaviour
     private List<TimeModeManager> clocks;
 
     [SerializeField]
-    private GameObject clockPrefab;
+    private GameObject clockTemplate;
 
     [SerializeField]
     private GameObject scrollView;
@@ -36,10 +36,15 @@ public class ClockManager : MonoBehaviour
 
     public void SpawnClock() 
     {
-        GameObject obj = Instantiate(clockPrefab, scrollView.transform);
+        GameObject obj = Instantiate(clockTemplate, scrollView.transform);
         obj.SetActive(true);
         obj.name = $"Clock {clocks.Count}";
 
+        // TODO: Do I need to make this null safe? I believe this failing should be desired behaviour for development
+        //       as it is a clear indication that something is wrong with the setup of the scene
+
+        //       NOTE: I am not changing the template object setup due to the lack of time, and it will require many
+        //             additional changes throughout the project base. Please see report for more information.
         clocks.Add(obj.GetComponent<TimeModeManager>());
 
         if(clocks.Count > minimumNumberOfClocks)

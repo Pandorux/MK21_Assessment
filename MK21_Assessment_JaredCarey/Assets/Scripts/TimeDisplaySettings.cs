@@ -31,9 +31,14 @@ public class TimeDisplaySettings : MonoBehaviour
         SetupSetTimeDropDownLists();
     }
 
-    void Update()
+    void OnEnable()
     {
-        UpdateTimeFormatDropDownList();
+        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateTimeFormatDropDownList);
+    }
+
+    void OnDisable()
+    {
+        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateTimeFormatDropDownList);
     }
 
     public void UpdateTimeDisplayTimeFormat()
@@ -59,6 +64,11 @@ public class TimeDisplaySettings : MonoBehaviour
         e.seconds = DateTime.Now.Second; // The user cannot set seconds 
 
         timeDisplayTimeMode.OnUserEdited(e);
+    }
+
+    private void UpdateTimeFormatDropDownList(object sender)
+    {
+        UpdateTimeFormatDropDownList();
     }
 
     private void UpdateTimeFormatDropDownList()
