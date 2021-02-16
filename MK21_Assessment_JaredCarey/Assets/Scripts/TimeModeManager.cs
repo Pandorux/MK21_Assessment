@@ -133,13 +133,14 @@ public class TimeModeManager : MonoBehaviour
 
     public void ActiveTimeModeEdited()
     {
-        Debug.Log("ActiveTimeModeEdited Method Called");
-
         if(getActiveTimeMode.timeMode is ISettableTimeMode)
         {
             OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
             e.time = "This is working";
-            Debug.Log($"User Edit Update Test: {e.time}");
+
+            #if UNITY_EDITOR
+                Debug.Log($"User Edit Update Test: {e.time}");
+            #endif
             
             ((ISettableTimeMode) getActiveTimeMode.timeMode).OnUserEdited(e);
         }

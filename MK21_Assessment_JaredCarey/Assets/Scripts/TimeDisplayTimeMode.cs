@@ -109,9 +109,11 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         onUserEdit += new OnTimeUpdateEventHandler(SetTime);
         StartTimeMode();
 
-        Debug.Log($"DateTime Max Hours Value: {DateTime.MaxValue.Hour}");
-        Debug.Log($"DateTime Max Minutes Value: {DateTime.MaxValue.Minute}");
-        Debug.Log($"DateTime Max Seconds Value: {DateTime.MaxValue.Second}");
+        #if UNITY_EDITOR
+            Debug.Log($"DateTime Max Hours Value: {DateTime.MaxValue.Hour}");
+            Debug.Log($"DateTime Max Minutes Value: {DateTime.MaxValue.Minute}");
+            Debug.Log($"DateTime Max Seconds Value: {DateTime.MaxValue.Second}");
+        #endif
     }
 
     void Update() 
