@@ -59,7 +59,7 @@ public class TimeModeManager : MonoBehaviour
     private List<TimeModeInformation> timeModes = new List<TimeModeInformation>();
 
     [SerializeField]
-    private  Button destroyButton;
+    private Button destroyButton;
     private bool m_CanUserDestroy = false;
     public bool canUserDestroy
     {
