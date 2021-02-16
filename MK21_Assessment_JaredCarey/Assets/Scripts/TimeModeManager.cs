@@ -56,7 +56,7 @@ public class TimeModeManager : MonoBehaviour
     [SerializeField]
     private TimeModeInformation countDownTimeMode;
 
-    private TimeModeInformation[] timeModes;
+    private List<TimeModeInformation> timeModes = new List<TimeModeInformation>();
 
     [SerializeField]
     private  Button destroyButton;
@@ -76,29 +76,26 @@ public class TimeModeManager : MonoBehaviour
 
     void Start()
     {
-        timeDisplayTimeMode.timeMode = timeDisplayTimeMode.timeModeGameObject.GetComponent<TimeDisplayTimeMode>();
-        stopWatchTimeMode.timeMode = stopWatchTimeMode.timeModeGameObject.GetComponent<StopWatchTimeMode>();
-        countDownTimeMode.timeMode = countDownTimeMode.timeModeGameObject.GetComponent<CountDownTimeMode>();
+        timeDisplayTimeMode.timeMode = timeDisplayTimeMode?.timeModeGameObject?.GetComponent<TimeDisplayTimeMode>();
+        stopWatchTimeMode.timeMode = stopWatchTimeMode?.timeModeGameObject?.GetComponent<StopWatchTimeMode>();
+        countDownTimeMode.timeMode = countDownTimeMode?.timeModeGameObject?.GetComponent<CountDownTimeMode>();
 
-        timeModes = new TimeModeInformation[] {
-            timeDisplayTimeMode,
-            stopWatchTimeMode,
-            countDownTimeMode
-        };
-
-        if(timeModes[(int)TimeModes.TimeDisplay].timeMode != null)
+        if(timeDisplayTimeMode.timeMode != null)
         {
             timeDisplayTimeMode.timeMode.timeDisplayUpdate += new OnTimeUpdateEventHandler(UpdateTimeDisplay);
+            timeModes.Add(timeDisplayTimeMode);
         }
         
-        if(timeModes[(int)TimeModes.StopWatch].timeMode != null)
+        if(stopWatchTimeMode.timeMode != null)
         {
             stopWatchTimeMode.timeMode.timeDisplayUpdate += new OnTimeUpdateEventHandler(UpdateTimeDisplay);
+            timeModes.Add(stopWatchTimeMode);
         }
         
-        if(timeModes[(int)TimeModes.CountDown].timeMode != null)
+        if(countDownTimeMode.timeMode != null)
         {
             countDownTimeMode.timeMode.timeDisplayUpdate += new OnTimeUpdateEventHandler(UpdateTimeDisplay);
+            timeModes.Add(countDownTimeMode);
         }
 
         SelectTimeMode((int)startingTimeMode);
@@ -108,7 +105,7 @@ public class TimeModeManager : MonoBehaviour
     {
         currentTimeMode = (TimeModes)timeModeIndex;
 
-        for(int i = 0; i < timeModes.Length; i++) 
+        for(int i = 0; i < timeModes.Count; i++) 
         {
             bool isSelectedMode = (i == timeModeIndex);
             timeModes[i].timeModeGameObject.SetActive(isSelectedMode);

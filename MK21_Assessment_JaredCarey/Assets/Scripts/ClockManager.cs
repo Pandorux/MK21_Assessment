@@ -9,7 +9,7 @@ public class ClockManager : MonoBehaviour
     private List<TimeModeManager> clocks;
 
     [SerializeField]
-    private GameObject clockPrefab;
+    private GameObject clockTemplate;
 
     [SerializeField]
     private GameObject scrollView;
@@ -36,7 +36,7 @@ public class ClockManager : MonoBehaviour
 
     public void SpawnClock() 
     {
-        GameObject obj = Instantiate(clockPrefab, scrollView.transform);
+        GameObject obj = Instantiate(clockTemplate, scrollView.transform);
         obj.SetActive(true);
         obj.name = $"Clock {clocks.Count}";
 
