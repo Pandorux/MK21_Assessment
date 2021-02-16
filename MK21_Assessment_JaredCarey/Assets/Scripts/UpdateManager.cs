@@ -39,9 +39,14 @@ public class UpdateManager : MonoBehaviour
     {
         // Lazy Init for Singleton Pattern
         if(instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(this);
+        }
         else
+        {
             Destroy(gameObject);
+        }
     }
 
     void Update()

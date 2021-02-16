@@ -40,17 +40,22 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         onUserEdit += new OnTimeUpdateEventHandler(SetTime);
     }
 
+    void OnEnable()
+    {
+        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCountDownTime);
+    }
+
+    void OnDisable()
+    {
+        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithCountDownTime);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(GetIsTimeModeActive()) 
+        if(GetIsTimeModeActive() && getTimeRemaining < TimeSpan.Zero && !isAlarmPlaying) 
         {
-            UpdateDisplayWithCountDownTime();
-
-            if(getTimeRemaining < TimeSpan.Zero && !isAlarmPlaying)
-            {
-                PlayAlarmClock();
-            }
+            PlayAlarmClock();
         }
     }
 
@@ -75,6 +80,14 @@ public class CountDownTimeMode : AbstractSettableTimeMode
     {
         base.ResetTimeMode();
         timeElapsed.Reset();
+    }
+
+    public void UpdateDisplayWithCountDownTime(object sender)
+    {
+        if(GetIsTimeModeActive()) 
+        {
+            UpdateDisplayWithCountDownTime();
+        }
     }
 
     public void UpdateDisplayWithCountDownTime()

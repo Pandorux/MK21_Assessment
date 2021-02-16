@@ -900,7 +900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clocks: []
-  clockPrefab: {fileID: 8584182055461927424}
+  clockTemplate: {fileID: 8584182055461927424}
   scrollView: {fileID: 6741034371460283490}
   minimumNumberOfClocks: 1
 --- !u!1 &6741034372891559800

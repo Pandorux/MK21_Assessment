@@ -116,7 +116,17 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         #endif
     }
 
-    void Update() 
+    void OnEnable()
+    {
+        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCurrentTime);
+    }
+
+    void OnDisable()
+    {
+        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithCurrentTime);
+    }
+
+    public void UpdateDisplayWithCurrentTime(object sender)
     {
         if(GetIsTimeModeActive())
         {

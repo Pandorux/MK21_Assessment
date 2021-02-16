@@ -23,7 +23,7 @@ public class CountdownSettings : MonoBehaviour
         SetupTimeFormatOptionData();
     }
 
-    public void UpdateTime()
+    public void UpdateTime(object sender)
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
 
