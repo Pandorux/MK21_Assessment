@@ -79,6 +79,7 @@ public class CountDownTimeMode : AbstractSettableTimeMode
     public override void ResetTimeMode() 
     {
         base.ResetTimeMode();
+        StopTimeMode();
         timeElapsed.Reset();
     }
 
