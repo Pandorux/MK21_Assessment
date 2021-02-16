@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/Imp_ClockManagement.unity
+    guid: 3c20d00ff2c9d4c47bc7d3ede1391b1d
   m_configObjects: {}

@@ -1,0 +1,4 @@
+
+The Unity Scene that displays all functionality required by the guidelines of the Graduate Programmer Test is in Imp_ClockManagement.unity. It located in 
+
+MK21_Assessment_JaredCarey\Assets\_Scenes\Imp_ClockManagement.unity
