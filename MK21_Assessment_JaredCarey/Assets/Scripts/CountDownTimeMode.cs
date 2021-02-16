@@ -22,7 +22,7 @@ public class CountDownTimeMode : AbstractSettableTimeMode
 
         private set
         {
-            m_IsAlarmPlaying = true;
+            m_IsAlarmPlaying = value;
         }
     }
 
