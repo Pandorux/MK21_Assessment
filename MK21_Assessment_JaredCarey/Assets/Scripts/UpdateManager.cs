@@ -4,11 +4,19 @@ using UnityEngine;
 
 public delegate void Update(object sender);
 
+/// <summary>
+/// A class for handling updates required by many updates / global updates. This class currently handles updates for
+/// 
+/// - The User Interface
+///
+/// </summary>
 public class UpdateManager : MonoBehaviour
 {
+    // Singleton
     [HideInInspector]
     public static UpdateManager instance = null;
 
+    // User Interface Update Variables 
     [SerializeField]
     [Range(0, 5)]
     private float userInterfaceUpdateDelay = 0.3f;

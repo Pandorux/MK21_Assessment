@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Class that manages the Countdown Time Mode UI and update the data within Countdown Time Mode UI
+/// <summary>
 public class CountdownSettings : MonoBehaviour
 {
+    // Variables
     [SerializeField]
     private CountDownTimeMode countdownTimeMode;
 
@@ -18,6 +22,9 @@ public class CountdownSettings : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown setSecondDropDown;
 
+
+
+    // Methods
     void Start()
     {
         SetupTimeFormatOptionData();
@@ -36,6 +43,7 @@ public class CountdownSettings : MonoBehaviour
 
     private void SetupTimeFormatOptionData()
     {
+        // Create Dropdown Options - Hours
         List<TMP_Dropdown.OptionData> hoursOptData = new List<TMP_Dropdown.OptionData>();
         for(int i = 0; i <= DateTime.MaxValue.Hour; i++)
         {
@@ -43,6 +51,7 @@ public class CountdownSettings : MonoBehaviour
             hoursOptData.Add(new TMP_Dropdown.OptionData(text));
         }
 
+        // Create Dropdown Options - Minutes
         List<TMP_Dropdown.OptionData> minutesOptData = new List<TMP_Dropdown.OptionData>();
         for(int i = 0; i <= DateTime.MaxValue.Minute; i++)
         {
@@ -50,6 +59,7 @@ public class CountdownSettings : MonoBehaviour
             minutesOptData.Add(new TMP_Dropdown.OptionData(text));
         }
 
+        // Create Dropdown Options - Seconds
         List<TMP_Dropdown.OptionData> secondsOptData = new List<TMP_Dropdown.OptionData>();
         for(int i = 0; i <= DateTime.MaxValue.Second; i++)
         {
@@ -57,6 +67,7 @@ public class CountdownSettings : MonoBehaviour
             secondsOptData.Add(new TMP_Dropdown.OptionData(text));
         }
 
+        // Add all of the newly created dropdown options to their respective dropdowns
         setHourDropDown.AddOptions(hoursOptData);
         setMinuteDropDown.AddOptions(minutesOptData);
         setSecondDropDown.AddOptions(secondsOptData);

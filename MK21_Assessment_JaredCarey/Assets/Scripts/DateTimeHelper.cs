@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A helper class that contains generic methods used through the time mode classes
+/// <summary>
 public static class DateTimeHelper
 {
     public static TimeSpan GetTimeDifference(TimeSpan timeA, TimeSpan timeB)
@@ -45,5 +48,26 @@ public static class DateTimeHelper
         }
 
         return false;
+    }
+
+    public static bool IsItPM(int currentHour)
+    {
+        if(currentHour > 12)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static int ConvertHoursTo12HourClock(int currentHour)
+    {
+        // You can also do Convert.ToInt32(dateTime.ToString("h")), but this seems quite wasteful of the CPU
+        return ((currentHour + 11) % 12) + 1;
+    }
+
+    public static int ConvertHoursTo24HourClock(int currentHour)
+    {
+        return (currentHour + 12);
     }
 }

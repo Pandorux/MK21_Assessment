@@ -5,17 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// This class handles swapping between different Time Modes of a clock and triggering their generic functions (Starting and stopping)
+/// </summary>
 public class TimeModeManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private TimeModes startingTimeMode = TimeModes.TimeDisplay;
-    public TimeModes currentTimeMode
-    {
-        get;
-        private set;
-    }
-
+    /// <summary>
+    /// Internal Container class of generic information needed about a Time Mode. 
+    /// Also enables the information required to be shown clearly in the Unity Inspector.
+    /// </summary>
     [System.Serializable]
     private class TimeModeInformation
     {
@@ -39,6 +38,17 @@ public class TimeModeManager : MonoBehaviour
         }
     } 
 
+
+
+    // Time Mode Variables
+    [SerializeField]
+    private TimeModes startingTimeMode = TimeModes.TimeDisplay;
+    public TimeModes currentTimeMode
+    {
+        get;
+        private set;
+    }
+
     TimeModeInformation getActiveTimeMode
     {
         get
@@ -58,9 +68,13 @@ public class TimeModeManager : MonoBehaviour
 
     private List<TimeModeInformation> timeModes = new List<TimeModeInformation>();
 
+
+
+    // Clock Destruction Variables
     [SerializeField]
     private Button destroyButton;
     private bool m_CanUserDestroy = false;
+    
     public bool canUserDestroy
     {
         get
@@ -74,6 +88,8 @@ public class TimeModeManager : MonoBehaviour
         }
     }
 
+
+    // Monobehaviours
     void Start()
     {
         timeDisplayTimeMode.timeMode = timeDisplayTimeMode?.timeModeGameObject?.GetComponent<TimeDisplayTimeMode>();
@@ -101,6 +117,9 @@ public class TimeModeManager : MonoBehaviour
         SelectTimeMode((int)startingTimeMode);
     }
     
+
+
+    // Time Mode Functions 
     public void SelectTimeMode(int timeModeIndex) 
     {
         currentTimeMode = (TimeModes)timeModeIndex;
@@ -110,12 +129,6 @@ public class TimeModeManager : MonoBehaviour
             bool isSelectedMode = (i == timeModeIndex);
             timeModes[i].timeModeGameObject.SetActive(isSelectedMode);
         }
-    }
-
-    public void ChangeTimeModeToCurrentTime() 
-    {
-        currentTimeMode = TimeModes.TimeDisplay;
-        SelectTimeMode((int)currentTimeMode);
     }
 
     public void StartActiveTimeMode()
@@ -128,26 +141,14 @@ public class TimeModeManager : MonoBehaviour
         timeModes[(int)currentTimeMode].timeMode.StopTimeMode();
     }
 
-    public void ActiveTimeModeEdited()
-    {
-        if(getActiveTimeMode.timeMode is ISettableTimeMode)
-        {
-            OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
-            e.time = "This is working";
-
-            #if UNITY_EDITOR
-                Debug.Log($"User Edit Update Test: {e.time}");
-            #endif
-            
-            ((ISettableTimeMode) getActiveTimeMode.timeMode).OnUserEdited(e);
-        }
-    }
-
     private void UpdateTimeDisplay(object sender, OnTimeUpdateEventArgs e)
     {
         timeModes[(int)currentTimeMode].text = e.time;
     }
 
+
+
+    // Clock Destruction Methods
     public void UserCannotDestroy()
     {
         canUserDestroy = false;

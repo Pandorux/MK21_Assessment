@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class CountDownTimeMode : AbstractSettableTimeMode
 {
+    // Variables 
     [SerializeField]
     private AudioSource countDownAlarm;
 
@@ -35,22 +36,15 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         }
     }
 
+
+
+    // Monobehaviours
     void Awake()
     {
         onUserEdit += new OnTimeUpdateEventHandler(SetTime);
     }
 
-    void OnEnable()
-    {
-        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCountDownTime);
-    }
-
-    void OnDisable()
-    {
-        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithCountDownTime);
-    }
-
-    // Update is called once per frame
+        // Update is called once per frame
     void Update()
     {
         if(GetIsTimeModeActive() && getTimeRemaining < TimeSpan.Zero && !isAlarmPlaying) 
@@ -59,6 +53,26 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         }
     }
 
+
+
+    // IMonobehaviourEventSubscription Methods
+    public override void SubscribeEvents()
+    {
+        if(areMonobehaviourEventsSubscribed != true)
+        {
+            UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCountDownTime);
+            base.SubscribeEvents();
+        }
+    }
+
+    public override void UnsubscribeEvents()
+    {
+        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithCountDownTime);
+        base.UnsubscribeEvents();
+    }
+
+
+    // Generic Time Mode Methods
     public override void StartTimeMode() 
     {
         base.StartTimeMode();
@@ -83,6 +97,9 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         timeElapsed.Reset();
     }
 
+
+
+    // Countdown Time Mode UI Methods
     public void UpdateDisplayWithCountDownTime(object sender)
     {
         if(GetIsTimeModeActive()) 
@@ -99,6 +116,9 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         TimeDisplayUpdated(e);
     }
 
+
+
+    // Countdown Time Mode Update Methods
     public override void SetTime(TimeSpan newTime)
     {
         countdownStartTime = newTime;
@@ -113,6 +133,10 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         SetTime(new TimeSpan(e.hours, e.minutes, e.seconds));
     }
 
+
+
+
+    // Countdown Time Mode Alarm Methods
     public void PlayAlarmClock()
     {
         isAlarmPlaying = true;
