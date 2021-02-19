@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Class that manages the creation and delection of all of the clocks through the TimeModeManager class
+/// <summary>
 public class ClockManager : MonoBehaviour
 {
     [SerializeField]
     private List<TimeModeManager> clocks;
 
+    // NOTE: the clock template in the scene may not have information that a prefab could possibly have
+    //       i.e. clock UI could use the remove clock method that would not be accesible in a clock prefab
     [SerializeField]
     private GameObject clockTemplate;
 
@@ -34,6 +39,9 @@ public class ClockManager : MonoBehaviour
         }
     }
 
+
+
+    // Clock creation and deletion methods
     public void SpawnClock() 
     {
         GameObject obj = Instantiate(clockTemplate, scrollView.transform);

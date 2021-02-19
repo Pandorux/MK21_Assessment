@@ -5,7 +5,9 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 
-
+/// <summary>
+/// Class for managing the UI that updates the Time Display
+/// </summary>
 public class TimeDisplaySettings : MonoBehaviour
 {
     private readonly static string DayTimePeriod_AM = "AM";
@@ -15,6 +17,7 @@ public class TimeDisplaySettings : MonoBehaviour
         { DayTimePeriod_PM, 1 }
     };
 
+    // Variables
     [SerializeField]
     private TimeDisplayTimeMode timeDisplayTimeMode;
 
@@ -44,15 +47,16 @@ public class TimeDisplaySettings : MonoBehaviour
         }
     }
 
+
+
+
+    // Monobehaviours 
     void Start()
     {
         SetupTimeFormatOptionData();
         SetupSetTimeDropDownLists(getFormattedCurrentHour, DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat));
     }
 
-
-
-    // Monobehaviour Events 
     void OnEnable()
     {
         UpdateSetTimeDisplay();
@@ -65,7 +69,8 @@ public class TimeDisplaySettings : MonoBehaviour
     }
 
 
-    // UI Shenanigans
+
+    // UI Methods - Updating | Set Time 
     private void UpdateSetTimeDisplay(object sender)
     {
         UpdateSetTimeDisplay();
@@ -88,17 +93,10 @@ public class TimeDisplaySettings : MonoBehaviour
         amPMDropDown.value = DateTimeHelper.IsItPM(timeDisplayTimeMode.getCurrentTime.Hour) ? DayTimePeriods[DayTimePeriod_PM] : DayTimePeriods[DayTimePeriod_AM];
     }
 
-    public void UpdateTime()
-    {
-        OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
 
-        e.hours = setHourDropDown.value;
-        e.minutes = setMinuteDropDown.value;
-        e.seconds = DateTime.Now.Second; // The user cannot set seconds 
 
-        timeDisplayTimeMode.OnUserEdited(e);
-    }
 
+    // UI Methods - Updating | Time Format 
     private void UpdateTimeFormatDropDownList(object sender)
     {
         UpdateTimeFormatDropDownList();
@@ -115,6 +113,22 @@ public class TimeDisplaySettings : MonoBehaviour
         timeFormatDropDown.value = Array.FindIndex(TimeDisplayTimeMode.TimeFormats, timeFormat => timeFormat == timeDisplayTimeMode.chosenTimeFormat);
     }
 
+
+    // UI Methods - Updating | Packages new time and sends it to Time Display Time Mode for consumption
+    public void UpdateTime()
+    {
+        OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
+
+        e.hours = setHourDropDown.value;
+        e.minutes = setMinuteDropDown.value;
+        e.seconds = DateTime.Now.Second; // The user cannot set seconds 
+
+        timeDisplayTimeMode.OnUserEdited(e);
+    }
+
+
+
+    // UI Methods - Setup | Time Format
     private void SetupTimeFormatOptionData()
     {
         for(int i = 0; i < TimeDisplayTimeMode.TimeFormats.Length; i++)
@@ -135,6 +149,9 @@ public class TimeDisplaySettings : MonoBehaviour
         timeFormatDropDown.AddOptions(timeFormatOptionData);
     }
 
+
+
+    // UI Methods - Setup | Set Time
     private void SetupSetTimeDropDownLists(int totalHours, bool showAmAndPm)
     {
         List<TMP_Dropdown.OptionData> hoursOptData = new List<TMP_Dropdown.OptionData>();

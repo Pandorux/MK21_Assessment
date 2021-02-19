@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A helper class that contains generic methods used through the time mode classes
+/// <summary>
 public static class DateTimeHelper
 {
     public static TimeSpan GetTimeDifference(TimeSpan timeA, TimeSpan timeB)

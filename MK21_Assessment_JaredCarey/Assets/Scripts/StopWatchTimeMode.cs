@@ -8,6 +8,9 @@ public class StopWatchTimeMode : AbstractTimeMode
     public readonly static string StopWatchDisplayFormat = @"hh\:mm\:ss";
     private Stopwatch stopWatch = new Stopwatch();
 
+
+
+    // Stop Watch Time Mode Mthods
     public override void StartTimeMode()
     {
         base.StartTimeMode();
@@ -43,6 +46,9 @@ public class StopWatchTimeMode : AbstractTimeMode
         TimeDisplayUpdated(e);
     }
 
+
+
+    // IMonobehaviourEventSubscriptions Methods
     public override void SubscribeEvents()
     {
         if(areMonobehaviourEventsSubscribed != true)

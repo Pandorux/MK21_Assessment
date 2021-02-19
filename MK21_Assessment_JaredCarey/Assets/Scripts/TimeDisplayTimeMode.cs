@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// This class handles swapping between different Time Modes of a clock and triggering their generic functions (Starting and stopping)
+/// </summary>
 public class TimeDisplayTimeMode : AbstractSettableTimeMode
 {
     public readonly static string[] TimeFormats = new string[] {
@@ -17,6 +21,9 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         "h:mm"
     };
 
+
+
+    // Variables
     private string defaultTimeFormat = TimeFormats[0];
     private string m_ChosenTimeFormat;
     public string chosenTimeFormat
@@ -102,6 +109,9 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         }
     }
 
+
+
+    // Monobehaviours
     void Awake()
     {
         chosenTimeFormat = defaultTimeFormat;
@@ -116,6 +126,9 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         #endif
     }
 
+
+
+    // IMonobehaviourEventSubscription Methods
     public override void SubscribeEvents()
     {
         if(areMonobehaviourEventsSubscribed != true)
@@ -131,6 +144,9 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         base.UnsubscribeEvents();
     }
 
+
+
+    // Time Display Methods
     public void UpdateDisplayWithCurrentTime(object sender)
     {
         if(GetIsTimeModeActive())

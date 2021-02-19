@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A patial implementation of ITimeMode that focuses on implementing generic behaviours that its child classes will use 
+/// <summary>
 public abstract class AbstractTimeMode : MonoBehaviour, ITimeMode, IMonoBehaviourEventSubscriptions
 {
+    // Variables
     protected bool isTimeModeActive = false;
     protected bool areMonobehaviourEventsSubscribed = false;
 
@@ -15,16 +19,12 @@ public abstract class AbstractTimeMode : MonoBehaviour, ITimeMode, IMonoBehaviou
             timeDisplayUpdate(this, e);
     }
 
-    public bool GetIsTimeModeActive()
-    {
-        return isTimeModeActive;
-    }
 
-    private void SetIsTimeModeActive(bool newState)
-    {
-        isTimeModeActive = newState;
-    }
 
+
+
+
+    // Patial Implementation of ITimeMode Methods
     public virtual void StartTimeMode()
     {
         SetIsTimeModeActive(true);
@@ -45,6 +45,18 @@ public abstract class AbstractTimeMode : MonoBehaviour, ITimeMode, IMonoBehaviou
         // TODO:
         throw new NotImplementedException();
     }
+
+    public bool GetIsTimeModeActive()
+    {
+        return isTimeModeActive;
+    }
+
+    private void SetIsTimeModeActive(bool newState)
+    {
+        isTimeModeActive = newState;
+    }
+
+
 
     // IMonoBehaviourEventSubscriptions Implementation
     void OnEnable()
