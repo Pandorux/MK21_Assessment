@@ -119,7 +119,15 @@ public class TimeDisplaySettings : MonoBehaviour
     {
         OnTimeUpdateEventArgs e = new OnTimeUpdateEventArgs();
 
-        e.hours = setHourDropDown.value;
+        if(DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat) && amPMDropDown.value == DayTimePeriods[DayTimePeriod_PM])
+        {
+            e.hours = DateTimeHelper.ConvertHoursTo24HourClock(setHourDropDown.value);;
+        }
+        else
+        {
+            e.hours = setHourDropDown.value;
+        }
+
         e.minutes = setMinuteDropDown.value;
         e.seconds = DateTime.Now.Second; // The user cannot set seconds 
 

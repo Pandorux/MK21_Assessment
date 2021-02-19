@@ -65,4 +65,9 @@ public static class DateTimeHelper
         // You can also do Convert.ToInt32(dateTime.ToString("h")), but this seems quite wasteful of the CPU
         return ((currentHour + 11) % 12) + 1;
     }
+
+    public static int ConvertHoursTo24HourClock(int currentHour)
+    {
+        return (currentHour + 12);
+    }
 }
