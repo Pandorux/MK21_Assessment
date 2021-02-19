@@ -6,8 +6,15 @@ using UnityEngine;
 using TMPro;
 
 
-public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptions
+public class TimeDisplaySettings : MonoBehaviour
 {
+    private readonly static string DayTimePeriod_AM = "AM";
+    private readonly static string DayTimePeriod_PM = "PM";
+    private readonly static Dictionary<string, int> DayTimePeriods = new Dictionary<string, int> {
+        { DayTimePeriod_AM, 0 },
+        { DayTimePeriod_PM, 1 }
+    };
+
     [SerializeField]
     private TimeDisplayTimeMode timeDisplayTimeMode;
 
@@ -23,37 +30,33 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
     [SerializeField]
     private TMP_Dropdown amPMDropDown;
 
-    private OptionDataKeyValue[] timeFormatOptionDataKeyValues;
+    private List<OptionDataKeyValue> timeFormatOptionDataKeyValues = new List<OptionDataKeyValue>();
+
+    int getFormattedCurrentHour {
+        get 
+        {
+            if(DateTimeHelper.IsItPM(timeDisplayTimeMode.getCurrentTime.Hour) && DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat))
+            {
+                return DateTimeHelper.ConvertHoursTo12HourClock(timeDisplayTimeMode.getCurrentTime.Hour);
+            }
+
+            return timeDisplayTimeMode.getCurrentTime.Hour;
+        }
+    }
 
     void Start()
     {
         SetupTimeFormatOptionData();
-        SetupSetTimeDropDownLists();
+        SetupSetTimeDropDownLists(getFormattedCurrentHour, DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat));
     }
 
+
+
+    // Monobehaviour Events 
     void OnEnable()
     {
-        SubscribeEvents();
-    }
-
-    void OnDisable()
-    {
-        UnsubscribeEvents();
-    }
-
-    void OnDestroy()
-    {
-        UnsubscribeEvents();
-    }
-
-    public void SubscribeEvents()
-    {
-        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateTimeFormatDropDownList);
-    }
-
-    public void UnsubscribeEvents()
-    {
-        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateTimeFormatDropDownList);
+        UpdateSetTimeDisplay();
+        UpdateTimeFormatDropDownList();
     }
 
     public void UpdateTimeDisplayTimeFormat()
@@ -61,13 +64,28 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
         timeDisplayTimeMode.chosenTimeFormat = timeFormatOptionDataKeyValues[timeFormatDropDown.value].key;
     }
 
+
+    // UI Shenanigans
+    private void UpdateSetTimeDisplay(object sender)
+    {
+        UpdateSetTimeDisplay();
+    }
+
     public void UpdateSetTimeDisplay()
     {
+        // Obtain Info that impacts how options are displayed
         bool showAmPm = DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat);
-        amPMDropDown.gameObject.SetActive(showAmPm);
-        
-        setHourDropDown.value = showAmPm ? 12 : timeDisplayTimeMode.getCurrentTime.Hour;
+        int totalHours = showAmPm ? DateTimeHelper.ConvertHoursTo12HourClock(DateTime.MaxValue.Hour) : DateTime.MaxValue.Hour;
+
+        // Reset Displayed Options
+        setHourDropDown.ClearOptions();
+        setMinuteDropDown.ClearOptions();
+        SetupSetTimeDropDownLists(totalHours, showAmPm);
+
+        // Update Default Value
+        setHourDropDown.value = getFormattedCurrentHour;
         setMinuteDropDown.value = timeDisplayTimeMode.getCurrentTime.Minute;
+        amPMDropDown.value = DateTimeHelper.IsItPM(timeDisplayTimeMode.getCurrentTime.Hour) ? DayTimePeriods[DayTimePeriod_PM] : DayTimePeriods[DayTimePeriod_AM];
     }
 
     public void UpdateTime()
@@ -88,7 +106,7 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
 
     private void UpdateTimeFormatDropDownList()
     {
-        for(int i = 0; i < timeFormatOptionDataKeyValues.Length; i++)
+        for(int i = 0; i < timeFormatOptionDataKeyValues.Count; i++)
         {
             timeFormatOptionDataKeyValues[i].text = timeDisplayTimeMode.getCurrentTime.ToString(timeFormatOptionDataKeyValues[i].key);
             timeFormatDropDown.options[i].text = timeFormatOptionDataKeyValues[i].text;
@@ -99,16 +117,15 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
 
     private void SetupTimeFormatOptionData()
     {
-        timeFormatOptionDataKeyValues = new OptionDataKeyValue[TimeDisplayTimeMode.TimeFormats.Length];
-
-        for(int i = 0; i < timeFormatOptionDataKeyValues.Length; i++)
+        for(int i = 0; i < TimeDisplayTimeMode.TimeFormats.Length; i++)
         {
             string optText = timeDisplayTimeMode.getCurrentTime.ToString(TimeDisplayTimeMode.TimeFormats[i]);
 
-            timeFormatOptionDataKeyValues[i] = new OptionDataKeyValue (
+            timeFormatOptionDataKeyValues.Add( 
+                    new OptionDataKeyValue (
                 TimeDisplayTimeMode.TimeFormats[i],
                 timeDisplayTimeMode.getCurrentTime.ToString(TimeDisplayTimeMode.TimeFormats[i])
-            );
+            ));
         }
 
         List<TMP_Dropdown.OptionData> timeFormatOptionData = timeFormatOptionDataKeyValues
@@ -118,10 +135,10 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
         timeFormatDropDown.AddOptions(timeFormatOptionData);
     }
 
-    private void SetupSetTimeDropDownLists()
+    private void SetupSetTimeDropDownLists(int totalHours, bool showAmAndPm)
     {
         List<TMP_Dropdown.OptionData> hoursOptData = new List<TMP_Dropdown.OptionData>();
-        for(int i = 0; i <= DateTime.MaxValue.Hour; i++)
+        for(int i = 0; i <= totalHours; i++)
         {
             hoursOptData.Add(new TMP_Dropdown.OptionData(i.ToString()));
         }
@@ -134,7 +151,6 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
 
         setHourDropDown.AddOptions(hoursOptData);
         setMinuteDropDown.AddOptions(minutesOptData);
-
-        //amPMDropDown.gameObject.SetActive(DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat));
+        amPMDropDown.gameObject.SetActive(showAmAndPm);
     }
 }
