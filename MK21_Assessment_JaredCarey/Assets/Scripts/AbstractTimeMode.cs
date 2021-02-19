@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractTimeMode : MonoBehaviour, ITimeMode
+public abstract class AbstractTimeMode : MonoBehaviour, ITimeMode, IMonoBehaviourEventSubscriptions
 {
     protected bool isTimeModeActive = false;
+    protected bool areMonobehaviourEventsSubscribed = false;
 
     public event OnTimeUpdateEventHandler timeDisplayUpdate;
     public void TimeDisplayUpdated(OnTimeUpdateEventArgs e)
@@ -43,5 +44,31 @@ public abstract class AbstractTimeMode : MonoBehaviour, ITimeMode
     {
         // TODO:
         throw new NotImplementedException();
+    }
+
+    // IMonoBehaviourEventSubscriptions Implementation
+    void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
+    void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+
+    public virtual void SubscribeEvents()
+    {
+        areMonobehaviourEventsSubscribed = true;
+    }
+
+    public virtual void UnsubscribeEvents()
+    {
+        areMonobehaviourEventsSubscribed = false;
     }
 }

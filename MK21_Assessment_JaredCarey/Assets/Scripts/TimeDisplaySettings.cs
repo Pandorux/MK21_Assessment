@@ -6,7 +6,7 @@ using UnityEngine;
 using TMPro;
 
 
-public class TimeDisplaySettings : MonoBehaviour
+public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptions
 {
     [SerializeField]
     private TimeDisplayTimeMode timeDisplayTimeMode;
@@ -33,10 +33,25 @@ public class TimeDisplaySettings : MonoBehaviour
 
     void OnEnable()
     {
-        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateTimeFormatDropDownList);
+        SubscribeEvents();
     }
 
     void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+
+    public void SubscribeEvents()
+    {
+        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateTimeFormatDropDownList);
+    }
+
+    public void UnsubscribeEvents()
     {
         UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateTimeFormatDropDownList);
     }

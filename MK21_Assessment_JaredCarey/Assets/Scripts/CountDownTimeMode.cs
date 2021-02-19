@@ -40,14 +40,19 @@ public class CountDownTimeMode : AbstractSettableTimeMode
         onUserEdit += new OnTimeUpdateEventHandler(SetTime);
     }
 
-    void OnEnable()
+    public override void SubscribeEvents()
     {
-        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCountDownTime);
+        if(areMonobehaviourEventsSubscribed != true)
+        {
+            UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCountDownTime);
+            base.SubscribeEvents();
+        }
     }
 
-    void OnDisable()
+    public override void UnsubscribeEvents()
     {
         UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithCountDownTime);
+        base.UnsubscribeEvents();
     }
 
     // Update is called once per frame

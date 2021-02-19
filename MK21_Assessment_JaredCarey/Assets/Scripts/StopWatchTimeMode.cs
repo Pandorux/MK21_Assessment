@@ -8,16 +8,6 @@ public class StopWatchTimeMode : AbstractTimeMode
     public readonly static string StopWatchDisplayFormat = @"hh\:mm\:ss";
     private Stopwatch stopWatch = new Stopwatch();
 
-    void OnEnable()
-    {
-        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithStopWatchTime);
-    }
-
-    void OnDisable()
-    {
-        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithStopWatchTime);
-    }
-
     public override void StartTimeMode()
     {
         base.StartTimeMode();
@@ -51,5 +41,20 @@ public class StopWatchTimeMode : AbstractTimeMode
         e.time = stopWatch.Elapsed.ToString(StopWatchDisplayFormat);
 
         TimeDisplayUpdated(e);
+    }
+
+    public override void SubscribeEvents()
+    {
+        if(areMonobehaviourEventsSubscribed != true)
+        {
+            UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithStopWatchTime);
+            base.SubscribeEvents();
+        }
+    }
+
+    public override void UnsubscribeEvents()
+    {
+        UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithStopWatchTime);
+        base.UnsubscribeEvents();
     }
 }

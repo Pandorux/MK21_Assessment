@@ -116,14 +116,19 @@ public class TimeDisplayTimeMode : AbstractSettableTimeMode
         #endif
     }
 
-    void OnEnable()
+    public override void SubscribeEvents()
     {
-        UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCurrentTime);
+        if(areMonobehaviourEventsSubscribed != true)
+        {
+            UpdateManager.instance.userInterfaceUpdate += new Update(UpdateDisplayWithCurrentTime);
+            base.SubscribeEvents();
+        }
     }
 
-    void OnDisable()
+    public override void UnsubscribeEvents()
     {
         UpdateManager.instance.userInterfaceUpdate -= new Update(UpdateDisplayWithCurrentTime);
+        base.UnsubscribeEvents();
     }
 
     public void UpdateDisplayWithCurrentTime(object sender)
