@@ -28,12 +28,13 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
     void Start()
     {
         SetupTimeFormatOptionData();
-        SetupSetTimeDropDownLists();
+        SetupSetTimeDropDownLists24Hours();
     }
 
     void OnEnable()
     {
         SubscribeEvents();
+        UpdateSetTimeDisplay();
     }
 
     void OnDisable()
@@ -61,13 +62,26 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
         timeDisplayTimeMode.chosenTimeFormat = timeFormatOptionDataKeyValues[timeFormatDropDown.value].key;
     }
 
+    private void UpdateSetTimeDisplay(object sender)
+    {
+        UpdateSetTimeDisplay();
+    }
+
     public void UpdateSetTimeDisplay()
     {
+        // Obtain Info that impacts how options are displayed
         bool showAmPm = DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat);
-        amPMDropDown.gameObject.SetActive(showAmPm);
-        
-        setHourDropDown.value = showAmPm ? 12 : timeDisplayTimeMode.getCurrentTime.Hour;
+        int totalHours = showAmPm ? 12 : timeDisplayTimeMode.getCurrentTime.Hour;
+
+        // Reset Displayed Options
+        setHourDropDown.ClearOptions();
+        setMinuteDropDown.ClearOptions();
+        SetupSetTimeDropDownLists(totalHours, showAmPm);
+
+        // Update Default Value
+        setHourDropDown.value = timeDisplayTimeMode.getCurrentTime.Hour;
         setMinuteDropDown.value = timeDisplayTimeMode.getCurrentTime.Minute;
+        amPMDropDown.value = timeDisplayTimeMode.getCurrentTime.Hour > 12 ? 1 : 0;
     }
 
     public void UpdateTime()
@@ -118,10 +132,16 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
         timeFormatDropDown.AddOptions(timeFormatOptionData);
     }
 
-    private void SetupSetTimeDropDownLists()
+    private void SetupSetTimeDropDownLists24Hours()
+    {
+        
+        SetupSetTimeDropDownLists(DateTime.MaxValue.Hour, false);
+    }
+
+    private void SetupSetTimeDropDownLists(int totalHours, bool showAmAndPm)
     {
         List<TMP_Dropdown.OptionData> hoursOptData = new List<TMP_Dropdown.OptionData>();
-        for(int i = 0; i <= DateTime.MaxValue.Hour; i++)
+        for(int i = 0; i <= totalHours; i++)
         {
             hoursOptData.Add(new TMP_Dropdown.OptionData(i.ToString()));
         }
@@ -135,6 +155,7 @@ public class TimeDisplaySettings : MonoBehaviour, IMonoBehaviourEventSubscriptio
         setHourDropDown.AddOptions(hoursOptData);
         setMinuteDropDown.AddOptions(minutesOptData);
 
+        amPMDropDown.gameObject.SetActive(showAmAndPm);
         //amPMDropDown.gameObject.SetActive(DateTimeHelper.DoesTimeFormatShowAMAndPM(timeDisplayTimeMode.chosenTimeFormat));
     }
 }
