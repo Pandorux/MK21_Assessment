@@ -6844,7 +6844,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7958946828514768621}
-        m_MethodName: UpdateTimeDisplayTimeFormat
+        m_MethodName: UpdateTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8581,7 +8581,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7958946828514768621}
-        m_MethodName: UpdateTimeDisplayTimeFormat
+        m_MethodName: UpdateTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9795,7 +9795,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7958946828514768621}
-        m_MethodName: UpdateTimeDisplayTimeFormat
+        m_MethodName: UpdateTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

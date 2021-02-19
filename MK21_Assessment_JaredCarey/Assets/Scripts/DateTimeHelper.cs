@@ -46,4 +46,20 @@ public static class DateTimeHelper
 
         return false;
     }
+
+    public static bool IsItPM(int currentHour)
+    {
+        if(currentHour > 12)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static int ConvertHoursTo12HourClock(int currentHour)
+    {
+        // You can also do Convert.ToInt32(dateTime.ToString("h")), but this seems quite wasteful of the CPU
+        return ((currentHour + 11) % 12) + 1;
+    }
 }
